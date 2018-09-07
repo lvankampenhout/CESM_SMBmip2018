@@ -34,7 +34,7 @@ for varname in varlist:
    for infile in files:
 
       if (not os.path.exists(remap_wgt)):
-         # only needed once per destination grid
+         # do once per destination grid
          args = ['cdo']
          args += ['genbil,%s' % scrip_dst, infile, remap_wgt]
          subprocess.check_call(args, stderr=subprocess.STDOUT)

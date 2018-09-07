@@ -20,18 +20,18 @@ begin
    ; ============================ 
    ; source file
    ; ============================ 
-   filein = "/glade2/scratch2/lvank/archive/smbmip/f.e20.FHIST.f09_001/QICE/QICE_f.e20.FHIST.f09_001.clm2.h2.1988-01.nc"
-   f     = addfile(filein,"r")
-   var = f->QICE(0,0,:,:)
+   filein = "/glade/scratch_old/lvank/archive/smbmip/f.e20.FHIST.f09_001/QICE/QICE_f.e20.FHIST.f09_001.clm2.h2.1988-01.nc"
+   ;f     = addfile(filein,"r")
+   ;var = f->QICE(0,0,:,:)
    ;printVarSummary(var)
 
-   Opt                = True
-   Opt@GridMask       = where(.not.ismissing(var),1,0)
-   Opt@ForceOverwrite = True
-   Opt@PrintTimings   = True
-   Opt@Title          = "CESM grid"
+   ;Opt                = True
+   ;Opt@GridMask       = where(.not.ismissing(var),1,0)
+   ;Opt@ForceOverwrite = True
+   ;Opt@PrintTimings   = True
+   ;Opt@Title          = "CESM grid"
 
-   rectilinear_to_SCRIP(srcGridName,var&latitude,var&longitude,Opt)
+   ;rectilinear_to_SCRIP(srcGridName,var&latitude,var&longitude,Opt)
 
    ; ============================ 
    ; destination file

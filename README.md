@@ -1,4 +1,4 @@
-SMBmip, August 2018
+CESM for SMBmip, August 2018
 
 STEP 1
 ------

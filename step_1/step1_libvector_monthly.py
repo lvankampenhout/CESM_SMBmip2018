@@ -8,7 +8,7 @@ import glob
 import os, os.path
 
 # import libvector package from local directory tree
-sys.path.insert(0, "../..")
+sys.path.insert(0, "/glade/u/home/lvank/github/libvector/")
 
 from libvector import VectorMecVariable, vector2gridded3d 
 
