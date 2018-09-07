@@ -4,7 +4,7 @@ STEP 1
 ------
    process monthly data, convert into gridded 3D files with custom levels
 
-   tools: Python, "libvector" library
+   tools: Python, [libvector](https://github.com/lvankampenhout/libvector) library
 
 STEP 2
 ------
