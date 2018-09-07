@@ -12,10 +12,6 @@ import netCDF4
 from netCDF4 import Dataset, default_fillvals
 from scipy.interpolate import InterpolatedUnivariateSpline
 
-# import libvector package from local directory tree
-sys.path.insert(0, "../../libvector")
-from VectorMecVariable import VectorMecVariable
-
 t1 = time.time()
 
 # Output file
