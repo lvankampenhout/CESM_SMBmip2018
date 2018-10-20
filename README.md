@@ -3,7 +3,7 @@ Link to the SMBMIP project [here](http://climato.be/cms/index.php?climato=SMBMIP
 
 
 # Data details
-The CESM data used in this submission stems from a atmosphere-only simulation (AMIP style) performed by Leo van Kampenhout on the Cheyenne supercomputer in August 2018. In particular, the compset used was `HIST_CAM60_CLM50%SP_CICE%PRES_DOCN%DOM_SROF_CISM2%NOEVOLVE_SWAV` with the sandbox `/gpfs/fs1/work/juliob/cesm_tags/cesm2.0.0`. 
+The CESM data used in this submission stems from a atmosphere-only simulation (AMIP style) performed by Leo van Kampenhout on the [Cheyenne](https://www2.cisl.ucar.edu/resources/computational-systems/cheyenne/cheyenne) supercomputer in August 2018. In particular, the compset used was `HIST_CAM60_CLM50%SP_CICE%PRES_DOCN%DOM_SROF_CISM2%NOEVOLVE_SWAV` with the sandbox `/gpfs/fs1/work/juliob/cesm_tags/cesm2.0.0`. 
 
 The simulation was started in 1979 with initial files for the land component (CLM) and atmosphere component (CAM) taken from a recent coupled simulation (`b.e20.BHIST.f09_g17.20thC.299_01`) in the same year. SST and SIC are prescribed by the [Hurrell et al. 2008](https://doi.org/10.1175/2008JCLI2292.1) dataset.
 
@@ -34,7 +34,7 @@ Step 3
 ------
    spatial regridding of levelled (3d) files to destination grid
 
-   tools: Python, CDO
+   tools: CDO, Python
 
 Step 4
 ------
@@ -54,13 +54,13 @@ Step 6
 ------
    Various postprocessing: merge variables, aggregate into yearly files, rename variables, convert units, update attributes, 
 
-   tools: Python / Jupyter notebook
+   tools: Python in Jupyter notebook
 
 Step 7
 ------
    Prepare file with some metadata
 
-   tools: Python / Jupyter notebook
+   tools: Python in Jupyter notebook
    
 # Contact
 Leo van Kampenhout (L.vankampenhout -at- uu.nl)
