@@ -14,53 +14,53 @@ All relevant variables for the intercomparison project were output in a separate
 
 Step 1
 ------
-   convert unstructured monthly data into levelled (3d) files. 
+   Convert unstructured monthly data into levelled (3d) files. 
    
-   The levels are in principle customizable but are chosen to reflect the levels that CLM internally uses (the virtual elevation class midpoints), augmented with sea level height:
+   The height levels are customizable and in this case chosen to reflect the levels that CLM internally uses (the virtual elevation class midpoints), augmented with sea level height:
 
 ```python
       levs = [0, 100.0, 300.0, 550.0, 850.0, 1150.0, 1450.0, 1800.0, 2250.0, 2750.0, 3500.0]
 ```
 
-   tools: Python, the custom [libvector](https://github.com/lvankampenhout/libvector) library
+   _tools: Python, the custom [libvector](https://github.com/lvankampenhout/libvector) library_
 
 Step 2
 ------
-   create SCRIP grid description of target grid (regional ice sheet domain)
+   Create SCRIP grid description of destination grid (i.e. the regional ice sheet domain)
 
-   tools: NCL, ESMF library
+   _tools: NCL, ESMF library_
 
 Step 3
 ------
-   spatial regridding of levelled (3d) files to destination grid
+   Spatial regridding of levelled (3d) files to destination grid
 
-   tools: CDO, Python
+   _tools: CDO, Python_
 
 Step 4
 ------
-   calculation of linear interpolation weights that project the 3D data onto the target elevation, yielding a 2D dataset. 
+   Salculation of linear interpolation weights that project the 3D data onto the target elevation, yielding a 2D dataset on the destination grid. 
    
    The result of this step is a 3D weights matrix (nlev, nlat, nlon) of which each vertical column sum (i.e. wgt[:,i,j].sum()) equals 1. This matrix can be multiplied with the levelled files produced in the previous step and then summed in the vertical direction to obtain a "linear interpolation" to the target elevation.
 
-   tools: Python
+   _tools: Python_
 
 Step 5
 ------
-   apply weights to monthly data. The result is a 2D projection on the target elevation.
+   Apply weights to the data.
 
-   tools: Python
+   _tools: Python_
 
 Step 6
 ------
    Various postprocessing: merge variables, aggregate into yearly files, rename variables, convert units, update attributes, 
 
-   tools: Python in Jupyter notebook
+   _tools: Python in Jupyter notebook_
 
 Step 7
 ------
    Prepare file with some metadata
 
-   tools: Python in Jupyter notebook
+   _tools: Python in Jupyter notebook_
    
 # Contact
 Leo van Kampenhout (L.vankampenhout -at- uu.nl)
