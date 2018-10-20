@@ -18,16 +18,21 @@ outdir      = '/glade/u/home/lvank/scratch/archive/smbmip/' # post-fix /$CASENAM
 #scrip_dst   = '/gpfs/u/home/lvank/github/libvector/smbmip/step_2/dst_SCRIP.nc' # SCRIP file of destination grid (from step 2)
 #remap_wgt    = 'remap_weights.nc' # temporary file
 
-varlist = 'RAIN SNOW QICE QRUNOFF QSNOMELT'.split()
+varlist = []
+varlist += 'RAIN SNOW QICE QRUNOFF QSNOMELT'.split()
+varlist += 'QICE_MELT QSOIL'.split()
+varlist += 'FSA FSR'.split()
+varlist += 'FIRE FIRA'.split()
+varlist += 'FSH EFLX_LH_TOT TSA'.split()
 
 # weights file
-outfile = '../step_4/projection_weights.nc'
+wgtfile = '/glade/u/home/lvank/github/smbmip_processing/step_4/projection_weights.nc'
 
 ######
 # END OF USER SETTINGS
 ######
 
-ds_wgt = xr.open_dataset(outfile)
+ds_wgt = xr.open_dataset(wgtfile)
 wgt = ds_wgt['weights']
 
 for varname in varlist:
@@ -41,27 +46,25 @@ for varname in varlist:
    files = sorted(files)
    print(varname, len(files))
 
-   #infile =  os.path.join(indir_var, varname+'_all.nc')
-   #outfile = os.path.join(outdir_var, varname+'_all.nc')
-
    for infile in files:
 
       basename = infile.split('/')[-1] # filename without path
       outfile = os.path.join(outdir_var, basename)
 
-      ds = xr.open_dataset(infile)
-      #print(ds[varname])
-      ds[varname] *=  wgt
-      #print(ds[varname])
+      if (os.path.exists(outfile)): 
+         print("INFO: file exists, skipping: "+outfile)
+         continue
 
-      da_var = ds[varname].sum(dim='lev', skipna=False)
+      ds = xr.open_dataset(infile)
+      ds[varname] *=  wgt
+
+      da_var = ds[varname].sum(dim='lev', skipna=False, keep_attrs=True)
       da_var.encoding = {'dtype': 'float32', '_FillValue': 9.96921e+36}
-      #print(da_var)
 
       ds.drop(varname)
       ds[varname] = da_var
-      #ds.drop('lev')
-      ds = ds.squeeze(drop=True)
+
+      #ds = ds.squeeze(drop=True) # drop time dimension
 
       #print(ds[varname])
       #ds[varname].encoding = {'dtype': 'float32', '_FillValue': 9.96921e+36}
@@ -69,5 +72,3 @@ for varname in varlist:
 
       ds.close()
       print("INFO: written %s" % outfile)
-      #assert(False)
-
