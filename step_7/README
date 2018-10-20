@@ -1,0 +1,3 @@
+
+# Add compression with this command
+/glade/u/apps/dav/opt/cdo/1.9.3/gnu/7.3.0/bin/cdo -f nc4 -z zip9 copy metadata_CESM_uncompressed.nc metadata_CESM.nc
