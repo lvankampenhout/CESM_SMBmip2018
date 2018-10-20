@@ -22,7 +22,12 @@ files = glob.glob(os.path.join(datadir,casename, 'lnd', 'hist', '*'+stream_tag+'
 files = sorted(files)
 print(len(files))
 
-varlist = 'RAIN SNOW QICE QRUNOFF QSNOMELT'.split()
+varlist = []
+varlist += 'RAIN SNOW QICE QRUNOFF QSNOMELT'.split()
+varlist += 'QICE_MELT QSOIL'.split()
+varlist += 'FSA FSR'.split()
+varlist += 'FIRE FIRA'.split()
+varlist += 'FSH EFLX_LH_TOT TSA'.split()
 
 
 for fname_vector in files:
@@ -37,10 +42,14 @@ for fname_vector in files:
 
       outfile = os.path.join(outdir_var, varname + '_' + basename)
 
+      if (os.path.exists(outfile)): 
+         print("INFO: file exists, skipping: "+outfile)
+         continue
+
       vmv = VectorMecVariable(varname, fname_vector)
 
       # set topography, required for custom levels
-      fname_cpl_restart = "/glade2/scratch2/lvank/archive/f.e20.FHIST.f09_001/rest/1994-01-01-00000/f.e20.FHIST.f09_001.cpl.r.1994-01-01-00000.nc"
+      fname_cpl_restart = "/gpfs/fs1/scratch/lvank/archive/f.e20.FHIST.f09_001/rest/1994-01-01-00000/f.e20.FHIST.f09_001.cpl.r.1994-01-01-00000.nc"
       vmv.setGlcTopoCouplerFile(fname_cpl_restart)
 
       # convert to 3D output (no corrections for elevation) and export to file
