@@ -38,7 +38,7 @@ Step 3
 
 Step 4
 ------
-   Salculation of linear interpolation weights that project the 3D data onto the target elevation, yielding a 2D dataset on the destination grid. 
+   Calculation of linear interpolation weights that project the 3D data onto the target elevation, yielding a 2D dataset on the destination grid. 
    
    The result of this step is a 3D weights matrix (nlev, nlat, nlon) of which each vertical column sum (i.e. wgt[:,i,j].sum()) equals 1. This matrix can be multiplied with the levelled files produced in the previous step and then summed in the vertical direction to obtain a "linear interpolation" to the target elevation.
 
