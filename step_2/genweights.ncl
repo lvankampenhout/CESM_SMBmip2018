@@ -36,18 +36,24 @@ begin
    ; ============================ 
    ; destination file
    ; ============================ 
-   dest_grid = "/gpfs/p/work/lvank/SMBmip/MARv3.9-yearly-ERA-Interim-1980.nc"
-   ;dest_grid = "/gpfs/p/work/lvank/SMBmip/grid.nc"
+   ;dest_grid = "/gpfs/p/work/lvank/SMBmip/MARv3.9-yearly-ERA-Interim-1980.nc"
+   ;dest_lat = "LAT"
+   ;dest_lon = "LON"
+
+   dest_grid = "/gpfs/fs1/work/lvank/SMBmip/1km-ISMIP6.nc"
+   dest_lat = "lat"
+   dest_lon = "lon"
    f2 = addfile(dest_grid, "r")
 
    Opt                := True
    Opt@ForceOverwrite = True
    Opt@PrintTimings   = True
-   Opt@Title          = "5x5km^2 GIMP grid provided by Xavier Fettweis"
+   ;Opt@Title          = "5x5km^2 GIMP grid provided by Xavier Fettweis"
+   Opt@Title          = "1681x2881 EPSG:3413 ISMIP6 1km grid"
    Opt@NetCDFType    = "netcdf4"
 
 ;   unstructured_to_ESMF(dstGridName, f2->LAT, f2->LON, Opt) ; LvK: Takes a very long time to finish!!
-   curvilinear_to_SCRIP(dstGridName,f2->LAT,f2->LON,Opt) ; LvK: this is preferred, works with CDO
+   curvilinear_to_SCRIP(dstGridName,f2->$dest_lat$,f2->$dest_lon$,Opt) ; LvK: this is preferred, works with CDO
 
 
    ; ============================ 

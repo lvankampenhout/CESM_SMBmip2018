@@ -18,19 +18,27 @@ t1 = time.time()
 outfile = 'projection_weights.nc'
 
 # Target elevation 
-elev_file   = '/gpfs/p/work/lvank/SMBmip/MARv3.9-yearly-ERA-Interim-1980.nc' # contains target elevation
-elev_varname = 'SRF_GIMP'
+if (False):
+   elev_file   = '/gpfs/p/work/lvank/SMBmip/MARv3.9-yearly-ERA-Interim-1980.nc' # contains target elevation
+   elev_varname = 'SRF_GIMP'
+   elev_lat = 'LAT'
+   elev_lon = 'LON'
+
+if (True): # ISMIP6-1km 
+   elev_file = '/gpfs/fs1/work/lvank/SMBmip/1km-ISMIP6.nc'
+   elev_varname = 'SRF'
+   elev_lat = 'lat'
+   elev_lon = 'lon'
 
 with Dataset(elev_file,'r') as fid:
-   srf_gimp = fid.variables[elev_varname][:] # Two dimensional
+   target_srf = fid.variables[elev_varname][:] # Two dimensional
 
-   lat2d = fid.variables['LAT'][:]
-   lon2d = fid.variables['LON'][:]
+   lat2d = fid.variables[elev_lat][:]
+   lon2d = fid.variables[elev_lon][:]
    
 
-
 # construct mask with invalid values, which will be used during output phase
-topo_dst_masked = np.ma.masked_greater(srf_gimp, 4000.)  # removes all values of 9999
+topo_dst_masked = np.ma.masked_greater(target_srf, 4000.)  # removes all values of 9999
 topo_dst_masked = np.ma.masked_less(topo_dst_masked, 0.) # removes negative values
 
 # standard numpy array for calculating weights; invalid values are treated as if they 
@@ -50,6 +58,7 @@ else:
    # MEC column topography
    # read TOPO_COL on target grid
    pass 
+
 
 if (topo_dst.max() >= levs[-1]):
    msg = '''

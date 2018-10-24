@@ -16,6 +16,7 @@ scrip_dst   = '/glade/u/home/lvank/projects/SMBmip//step_2/dst_SCRIP.nc' # SCRIP
 remap_wgt    = 'remap_weights.nc' # temporary file
 
 varlist = []
+#varlist += ['SNOW']
 varlist += 'RAIN SNOW QICE QRUNOFF QSNOMELT'.split()
 varlist += 'QICE_MELT QSOIL'.split()
 varlist += 'FSA FSR'.split()
@@ -24,6 +25,15 @@ varlist += 'FSH EFLX_LH_TOT TSA'.split()
 
 CDO_CMD='/glade/u/apps/dav/opt/cdo/1.9.3/gnu/7.3.0/bin/cdo' # dav
 #CDO_CMD='cdo'
+
+
+if (os.path.exists(remap_wgt)):
+   var = input(remap_wgt + " exists, remove? (y/n) : ")
+   if (var.lower() == "y"):
+      print("INFO: removing "+remap_wgt)
+      os.unlink(remap_wgt)
+   else:
+      print("INFO: not removing" + remap_wgt)
 
 
 for varname in varlist:
