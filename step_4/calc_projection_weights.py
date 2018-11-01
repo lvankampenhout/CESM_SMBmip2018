@@ -31,7 +31,7 @@ if (True): # ISMIP6-1km
    elev_lon = 'lon'
 
 with Dataset(elev_file,'r') as fid:
-   target_srf = fid.variables[elev_varname][:] # Two dimensional
+   target_srf = fid.variables[elev_varname][:].squeeze() # Two dimensional
 
    lat2d = fid.variables[elev_lat][:]
    lon2d = fid.variables[elev_lon][:]
@@ -47,6 +47,10 @@ topo_dst = topo_dst_masked.filled(fill_value = 0)
 
 #print(topo_dst.min())
 #print(topo_dst.max())
+#print(topo_dst.shape)
+nlat, nlon = topo_dst.shape
+print(topo_dst.shape)
+
 
 # Source elevation
 if (True):
@@ -57,7 +61,10 @@ if (True):
 else:
    # MEC column topography
    # read TOPO_COL on target grid
-   pass 
+
+   msg = '''
+   Script only custom levels at this point'''
+   raise NotImplementedError(msg)
 
 
 if (topo_dst.max() >= levs[-1]):
@@ -66,8 +73,7 @@ if (topo_dst.max() >= levs[-1]):
       This possibility has not accounted for in the script.'''
    raise NotImplementedError(msg)
 
-print(topo_dst.shape)
-nlat, nlon = topo_dst.shape
+
 
 # -------------------
 # compute weights
@@ -98,9 +104,9 @@ assert(wgt_B.max() <= 1.0)
 assert(wgt_B.min() >= 0.0)
 
 # store weights in 3d levelled array
-wgt = np.ma.zeros((nlat,nlon,nlev))
-print(wgt.shape)
-print(bin_idx.shape)
+wgt = np.ma.zeros((nlat,nlon,nlev), dtype=np.float64)
+#print(wgt.shape)
+#print(bin_idx.shape)
 
 t2 = time.time()
 print('INFO: elapsed time: %s [s]' % str(t2-t1))
